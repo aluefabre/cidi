@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">此地</string>
+    <string name="refresh">刷新</string>
+    <string name="create">创建</string>
+    <string name="writer">昵称</string>
+    <string name="body">内容</string>
+    <string name="confirm">确认</string>
+    <string name="edit_item">编辑</string>
+    <string name="latitude">经纬</string>
+    <string name="address">地点</string>
+    <string name="menu_delete">删除</string>
+</resources>

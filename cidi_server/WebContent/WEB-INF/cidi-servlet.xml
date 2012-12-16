@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>  
+	<bean id="urlMapping" class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" >
+		<property name="interceptors">
+            <list>
+            	<ref bean="userInterceptor"/>
+                <ref bean="pageVariablesInterceptor"/>
+            </list>
+        </property>
+	</bean>
+
+	<bean id="itemController" class="me.cidi.web.ItemController" autowire="byName">
+		
+	</bean>
+	
+	<bean id="commentController" class="me.cidi.web.CommentController" autowire="byName">
+		
+	</bean>
+	
+	<bean id="userController" class="me.cidi.web.UserController" autowire="byName">
+		
+	</bean>
+	
+	
+    <bean id="pageVariablesInterceptor" class="me.cidi.web.PageVariablesInterceptor">
+    
+    </bean>
+	
+	<bean id="userInterceptor" class="me.cidi.web.UserInterceptor" autowire="byName">
+    
+    </bean>
+    
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+  		<property name="prefix">
+    		<value>/</value>
+  		</property>
+  		<property name="suffix">
+    		<value>.jsp</value>
+  		</property>
+	</bean>
+
+</beans>

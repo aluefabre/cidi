@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>  
+
+	<bean id="itemDAO" class="me.cidi.dao.ItemDAO" autowire="byName">
+	
+	</bean>
+	
+	<bean id="userDAO" class="me.cidi.dao.UserDAO" autowire="byName">
+	
+	</bean>
+	
+	<bean id="commentDAO" class="me.cidi.dao.CommentDAO" autowire="byName">
+	
+	</bean>
+	
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation">
+			<value>classpath:sqlmap.xml</value>
+		</property>
+	</bean>
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/cidi?useUnicode=true&amp;characterEncoding=utf-8" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+		
+		<property name="initialSize" value="1" />
+		<property name="maxActive" value="10" />
+		<property name="minIdle" value="1" />	
+	</bean>
+	
+</beans>

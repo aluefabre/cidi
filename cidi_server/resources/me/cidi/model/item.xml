@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="cidi_item" >
+
+    <typeAlias alias="TA_CidiItem" type="me.cidi.model.Item" />
+  
+    <resultMap id="RM_CidiItem" class="TA_CidiItem" >
+      <result column="id" property="id" jdbcType="LONG" />
+      <result column="writer" property="writer" jdbcType="VARCHAR" />
+      <result column="user_id" property="userId" jdbcType="LONG" />
+      <result column="body" property="body" jdbcType="VARCHAR" />
+      <result column="address" property="address" jdbcType="VARCHAR" />
+      <result column="latitude" property="latitude" jdbcType="DOUBLE" />
+      <result column="longitude" property="longitude" jdbcType="DOUBLE" />
+      <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    </resultMap>
+  
+	<select id="listItem" resultMap="RM_CidiItem" >   
+	    select * from cidi_item    
+	</select>  
+  
+    <select id="searchItem" resultMap="RM_CidiItem" >   
+   		select * from cidi_item    
+    </select>  
+    
+	<update id="updateItem">
+		<![CDATA[
+			update cidi_item t
+			set 
+				t.writer = #writer#,
+				t.body = #body#
+			where t.id=#id#
+		]]>
+	</update>
+	
+	<select id="getItemById" resultMap="RM_CidiItem">
+		<![CDATA[
+			select 
+				id,
+				writer,  
+				user_id, 
+				body, 
+				address,
+				latitude, 
+				longitude, 
+				gmt_create
+			from cidi_item
+			where ID = #id# 
+		]]>
+	</select>
+	
+	<insert id="createItem" parameterClass="TA_CidiItem">
+		<![CDATA[
+			insert into cidi_item (
+			    writer,  
+			    user_id,
+				body, 
+				address, 
+				latitude,
+				longitude,
+				gmt_create)
+			values
+				(#writer#, 
+				 #userId#,
+				 #body#,
+				 #address#,
+				 #latitude#,
+				 #longitude#,
+				 #gmtCreate#			 
+				)
+		]]>
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+			<![CDATA[
+				SELECT LAST_INSERT_ID() AS id
+			]]>
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteItem">
+		<![CDATA[
+		delete from cidi_item 
+		 where id = #id#
+		]]>
+	</delete>
+	
+ </sqlMap>

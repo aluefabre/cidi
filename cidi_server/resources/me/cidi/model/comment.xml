@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="cidi_comment" >
+
+    <typeAlias alias="TA_CidiComment" type="me.cidi.model.Comment" />
+  
+    <resultMap id="RM_CidiComment" class="TA_CidiComment" >
+      <result column="id" property="id" jdbcType="LONG" />
+      <result column="item_id" property="itemId" jdbcType="LONG" />
+      <result column="writer" property="writer" jdbcType="VARCHAR" />
+      <result column="user_id" property="userId" jdbcType="LONG" />
+      <result column="body" property="body" jdbcType="VARCHAR" />
+      <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    </resultMap>
+  
+	<select id="listComment" resultMap="RM_CidiComment" >   
+	    select * from cidi_comment t
+	    where t.item_id=#itemId#    
+	</select>  
+  
+	<update id="updateComment">
+		<![CDATA[
+			update cidi_comment t
+			set 
+				t.writer = #writer#,
+				t.body = #body#
+			where t.id=#id#
+		]]>
+	</update>
+	
+	<select id="getCommentById" resultMap="RM_CidiComment">
+		<![CDATA[
+			select 
+				id,
+				item_id,
+				writer,  
+				user_id,
+				body, 
+				gmt_create
+			from cidi_comment
+			where ID = #id# 
+		]]>
+	</select>
+	
+	<insert id="createComment" parameterClass="TA_CidiComment">
+		<![CDATA[
+			insert into cidi_comment (
+				item_id,
+			    writer,  
+			    user_id,
+				body, 
+				gmt_create)
+			values
+				(
+				 #itemId#,
+				 #writer#, 
+				 #userId#, 
+				 #body#,
+				 #gmtCreate#			 
+				)
+		]]>
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+			<![CDATA[
+				SELECT LAST_INSERT_ID() AS id
+			]]>
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteComment">
+		<![CDATA[
+		delete from cidi_comment 
+		 where id = #id#
+		]]>
+	</delete>
+	
+ </sqlMap>

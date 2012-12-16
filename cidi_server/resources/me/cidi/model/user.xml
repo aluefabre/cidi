@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="cidi_user" >
+
+    <typeAlias alias="TA_CidiUser" type="me.cidi.model.User" />
+  
+    <resultMap id="RM_CidiUser" class="TA_CidiUser" >
+      <result column="id" property="id" jdbcType="LONG" />
+      <result column="name" property="name" jdbcType="VARCHAR" />
+      <result column="password" property="password" jdbcType="VARCHAR" />
+      <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    </resultMap>
+  
+	<select id="listUser" resultMap="RM_CidiUser" >   
+	    select * from cidi_user    
+	</select>  
+  
+	<update id="updateUser">
+		<![CDATA[
+			update cidi_user t
+			set 
+				t.name = #name#,
+				t.password = #password#
+			where t.id=#id#
+		]]>
+	</update>
+	
+	<select id="getUserById" resultMap="RM_CidiUser">
+		<![CDATA[
+			select 
+				id,
+				name,  
+				password,
+				gmt_create
+			from cidi_user
+			where ID = #id# 
+		]]>
+	</select>
+	
+	<insert id="createUser" parameterClass="TA_CidiUser">
+		<![CDATA[
+			insert into cidi_user (
+			    name,  
+				password, 
+				gmt_create)
+			values
+				(#name#, 
+				 #password#,
+				 #gmtCreate#	 
+				)
+		]]>
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+			<![CDATA[
+				SELECT LAST_INSERT_ID() AS id
+			]]>
+		</selectKey>
+	</insert>
+	
+	<insert id="createDefaultUser">
+		<![CDATA[
+			insert into cidi_user (
+				id,
+			    name,  
+				password, 
+				gmt_create)
+			values
+				(0, 
+				 '此地小星星',
+				 'password',
+				 now()	 
+				)
+		]]>
+	</insert>
+	
+	<delete id="deleteUser">
+		<![CDATA[
+		delete from cidi_user 
+		 where id = #id#
+		]]>
+	</delete>
+	
+ </sqlMap>
